@@ -370,6 +370,10 @@ footer a:hover {
   .hero h1 {
     font-size: 2.5rem;
   }
+
+  #about {
+    padding: 1 rem 1rem 1rem;
+  }
   
   .section {
     padding: 4rem 1rem 1rem;
