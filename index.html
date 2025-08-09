@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eduardo G. Montalbán</title>
+  <meta name="description" content="Landing oficial de la trilogía. Descubre los libros, lee extractos y conoce al autor." />
+  <link rel="canonical" href="https://tu-dominio-o-ghpages/" />
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Trilogía — Libros & Autor" />
+  <meta property="og:description" content="Descubre la trilogía: portadas animadas, extractos y biografía del autor." />
+  <meta property="og:image" content="assets/img/og-cover.jpg" />
+  <meta property="og:url" content="https://tu-dominio-o-ghpages/" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Trilogía — Libros & Autor" />
+  <meta name="twitter:description" content="Portadas animadas con parallax o vídeo scrub, extractos y autor." />
+  <meta name="twitter:image" content="assets/img/og-cover.jpg" />
+
+  <!-- Favicon Manifiesto básico -->
+  <link rel="icon" href="assets/img/favicon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!-- CSS -->
+  <link rel="preload" href="assets/css/styles.css" as="style" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- Preferencias de movimiento: CSS lo respetará; JS leerá este media query -->
+  <meta name="color-scheme" content="light dark" />
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="nav-header">
+        <a href="#about">EDUARDO G. MONTALBÁN</a>
+        <div class="nav-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">
+          <span class="icon">☰</span>
+        </div>
+      </div>
+      <ul>
+        <li><a href="#book1">LÁGRIMAS  CALLADAS</a></li>
+        <li><a href="#book2">CUANDO LA TARDE SEA NOCHE</a></li>
+        <li><a href="#book3">MARAÑA DE SILENCIOS</a></li>
+      </ul>
+      
+    </nav>
+  </header>
+  <main>
+    <section id="about" class="section">
+      <div class="author-img">
+        <img src="assets/img/about/author.jpeg" alt="Eduardo G. Montalbán"></img>
+      </div>
+      <h2>Sobre el autor</h2>
+      <p>Eduardo G. Montalbán es un autor contemporáneo que explora las emociones humanas a través de su narrativa.</p>
+      <p>Con una prosa poética y profunda, sus obras invitan a la reflexión y al descubrimiento personal.</p>
+    </section>
+    <section id="lastBook" class="section">
+      <h2>Último libro</h2>
+      <div class="book-cover-img">
+        <!-- <video src="assets/videos/lastBook.mp4" autoplay muted loop></video> -->
+        <img src="assets/img/book3/book3.webp" alt="Último libro de la trilogía"></img>
+      </div>
+      <p>Descubre el último libro de la trilogía, una obra que desafía los límites de la narrativa contemporánea.</p>
+      <a href="https://tu-dominio-o-ghpages/lastBook" class="btn">Leer extracto</a>
+    </section>
+    <section id="carrousel" class="section">
+      <h2>Libros</h2>
+      <div class="carousel">
+        <div class="carrousel-arrow left">
+          <span class="icon">&lt;</span>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/img/book1/book1.webp" alt="Lágrimas Calladas"></img>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/img/book2/book2.webp" alt="Cuando la Tarde Sea Noche"></img>
+        </div>
+        <div class="carousel-item">
+          <img src="assets/img/book3/book3.webp" alt="Maraña de Silencios"></img>
+        </div>
+        <div class="carrousel-arrow right">
+          <span class="icon">&gt;</span>
+        </div>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </section>
+    <section id="book1" class="section section-book">
+      <h2>Lágrimas Calladas</h2>
+      <div class="book-cover">
+        <video src="assets/video/book1.mp4" autoplay muted loop></video>
+      </div>
+      <p>Un viaje emocional a través de la pérdida y la redención.</p>
+      <a href="https://tu-dominio-o-ghpages/book1" class="btn">Leer extracto</a>
+    </section>
+    <section id="book2" class="section section-book">
+      <h2>Cuando la Tarde Sea Noche</h2>
+      <div class="book-cover">
+        <video src="assets/video/book2.mp4" autoplay muted loop></video>
+      </div>
+      <p>Una historia de amor y superación en tiempos difíciles.</p>
+      <a href="https://tu-dominio-o-ghpages/book2" class="btn">Leer extracto</a>
+    </section>
+    <section id="book3" class="section section-book">
+      <h2>Maraña de Silencios</h2>
+      <div class="book-cover-img">
+        <!-- <video src="assets/videos/book3.mp4" autoplay muted loop></video> -->
+        <img src="assets/img/book3/book3.webp" alt="Maraña de Silencios"></img>
+      </div>
+      <p>Un thriller psicológico que te mantendrá al borde del asiento.</p>
+      <a href="https://tu-dominio-o-ghpages/book3" class="btn">Leer extracto</a>
+    </section>
+    <footer>
+      <p>&copy; 2025 Eduardo G. Montalbán. Todos los derechos reservados.</p>
+      <p>Diseñado por <a href="https://eduardogr.com/">EduardoGR</a></p>
+    </footer>
+  </main>
+
+  <!-- JS -->
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>
