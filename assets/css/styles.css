@@ -100,10 +100,9 @@ nav a[aria-current="true"] {
 .section h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: white;
 }
 
-#about h2 {
+#about, #lastbook, #carrousel h2 {
   color: var(--primary-color);
 }
 
@@ -157,6 +156,25 @@ nav a[aria-current="true"] {
   height: 100%;
   object-fit: cover;
   border-radius: 16px;
+}
+
+.carousel-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  transition: var(--transition);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.carousel-item a:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item.active a:hover {
+  transform: scale(1.02);
 }
 
 /* ========= Flechas del carrusel ========= */

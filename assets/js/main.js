@@ -73,6 +73,33 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
   sections.forEach(s => io.observe(s));
 })();
 
+/* ========= Enlaces del carrusel con smooth scroll ========= */
+(function carouselLinksInit(){
+  const carouselLinks = qsa('.carousel-item a');
+  
+  carouselLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      
+      const target = qs(href);
+      if (!target) return;
+      
+      e.preventDefault();
+      
+      // Calcular la posición del header para el offset
+      const header = qs('header');
+      const headerHeight = header ? header.offsetHeight : 0;
+      const top = target.getBoundingClientRect().top + window.scrollY - (headerHeight + 20);
+      
+      window.scrollTo({ top, behavior: 'smooth' });
+      
+      // Actualizar la URL sin recargar la página
+      history.pushState(null, '', href);
+    });
+  });
+})();
+
 /* ========= Parallax por capas ========= */
 function parallaxTick() {
   if (prefersReduced) return; // respetar accesibilidad
