@@ -100,6 +100,10 @@ nav a[aria-current="true"] {
 .section h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
+  color: white;
+}
+
+#about h2 {
   color: var(--primary-color);
 }
 
@@ -220,7 +224,7 @@ nav a[aria-current="true"] {
 
 /* ========= Libros individuales ========= */
 .section-book {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #6a85b6 0%, #bac8e0 100%);
   color: white;
 }
 
@@ -270,8 +274,8 @@ footer {
 }
 
 .author-img {
-  width: 150px;
-  height: 150px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   overflow: hidden;
   margin: 1rem auto;
@@ -375,6 +379,202 @@ footer a:hover {
     width: 250px;
     height: 350px;
   }
+  
+  .social-links {
+    gap: 1rem;
+  }
+  
+  .social-links a {
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+}
+
+/* ========= Social Links Modernos ========= */
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.social-links a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.social-links a:hover::before {
+  left: 100%;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Colores específicos para cada red social */
+.social-links a[href*="twitter"],
+.social-links a[href*="x.com"] {
+  background: linear-gradient(135deg, #1DA1F2 0%, #0d8bd9 100%);
+  box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+}
+
+.social-links a[href*="instagram"] {
+  background: linear-gradient(135deg, #E4405F 0%, #F56040 50%, #FFDC80 100%);
+  box-shadow: 0 4px 15px rgba(228, 64, 95, 0.3);
+}
+
+.social-links a[href*="facebook"] {
+  background: linear-gradient(135deg, #1877F2 0%, #166fe5 100%);
+  box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+}
+
+.social-links a[href*="twitter"]:hover,
+.social-links a[href*="x.com"]:hover {
+  box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
+}
+
+.social-links a[href*="instagram"]:hover {
+  box-shadow: 0 8px 25px rgba(228, 64, 95, 0.4);
+}
+
+.social-links a[href*="facebook"]:hover {
+  box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4);
+}
+
+/* Animación de pulso sutil */
+.social-links a {
+  animation: social-pulse 3s ease-in-out infinite;
+}
+
+.social-links a:nth-child(1) { animation-delay: 0s; }
+.social-links a:nth-child(2) { animation-delay: 0.5s; }
+.social-links a:nth-child(3) { animation-delay: 1s; }
+
+@keyframes social-pulse {
+  0%, 100% { 
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+  50% { 
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+  }
+}
+
+/* ========= Estilos para Blockquote/Poema ========= */
+blockquote {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-left: 4px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  margin: 3rem 0;
+  max-width: 600px;
+  font-family: 'Helvetica', cursive;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: Georgia, serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+blockquote::after {
+  content: '"';
+  position: absolute;
+  bottom: -30px;
+  right: 15px;
+  font-size: 4rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-family: Georgia, serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+blockquote p {
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Efecto de entrada elegante para el blockquote */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+blockquote {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Responsive para blockquote */
+@media (max-width: 768px) {
+  blockquote {
+    padding: 2rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 90%;
+  }
+  
+  blockquote::before,
+  blockquote::after {
+    font-size: 3rem;
+  }
+  
+  blockquote::before {
+    top: -5px;
+    left: 10px;
+  }
+  
+  blockquote::after {
+    bottom: -20px;
+    right: 10px;
+  }
 }
 
 /* ========= Preferencias de movimiento ========= */
@@ -382,7 +582,14 @@ footer a:hover {
   .carousel-item,
   .carrousel-arrow,
   .dot,
-  .btn {
+  .btn,
+  .social-links a,
+  blockquote {
+    transition: none;
+    animation: none;
+  }
+  
+  .social-links a::before {
     transition: none;
   }
 }
