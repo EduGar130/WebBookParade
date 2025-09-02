@@ -1,33 +1,29 @@
+/* main.js — single clean implementation for helpers, nav and carousel */
+
 /* ========= Helpers ========= */
 const qs  = (s, c=document) => c.querySelector(s);
-const qsa = (s, c=document) => [...c.querySelectorAll(s)];
+const qsa = (s, c=document) => Array.from(c.querySelectorAll(s));
 const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min, v));
 
-/** Throttle basado en rAF: ejecuta handler ~1x por frame */
 function rafThrottle(fn) {
   let af = null, lastArgs = null;
   return function throttled(...args) {
     lastArgs = args;
     if (af) return;
-    af = requestAnimationFrame(() => {
-      af = null;
-      fn.apply(this, lastArgs);
-    });
+    af = requestAnimationFrame(() => { af = null; fn.apply(this, lastArgs); });
   };
 }
 
-/** Calcula progreso 0..1 del scroll relativo a un elemento (entra y sale del viewport) */
 function elementScrollProgress(el, offset = 0) {
   const rect = el.getBoundingClientRect();
   const vh = window.innerHeight || document.documentElement.clientHeight;
-  // Comienza a animar cuando el top entra en viewport; termina cuando bottom sale
-  const start = vh * (0 + offset);
+  const start = vh * offset;
   const end   = rect.height + vh * (1 - offset);
   const y = -rect.top + start;
   return clamp(y / end, 0, 1);
 }
 
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ========= Navbar: toggle + scrollspy ========= */
 (function navInit(){
@@ -41,7 +37,6 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
   }
 
   const links = qsa('[data-spy]');
-  // Smooth-scroll manual para compensar cabecera sticky en algunos navegadores
   links.forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href');
@@ -49,251 +44,119 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
       const target = qs(id);
       if (!target) return;
       e.preventDefault();
-      const headerH = qs('.site-header').offsetHeight || 0;
+      const headerH = qs('.site-header') ? qs('.site-header').offsetHeight : 0;
       const top = target.getBoundingClientRect().top + window.scrollY - (headerH + 8);
       window.scrollTo({ top, behavior: 'smooth' });
-      menu?.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
+      if (menu) menu.classList.remove('open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
       history.pushState(null, '', id);
     });
   });
 
-  // Scrollspy con IntersectionObserver
   const sections = qsa('main > .section');
-  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href'), a]));
-  const io = new IntersectionObserver((entries)=> {
-    entries.forEach(en => {
-      if (en.isIntersecting) {
-        const id = '#' + en.target.id;
-        links.forEach(a => a.removeAttribute('aria-current'));
-        byId[id]?.setAttribute('aria-current', 'true');
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
-  sections.forEach(s => io.observe(s));
+  const byHref = Object.fromEntries(links.map(a => [a.getAttribute('href'), a]));
+  if (sections.length && Object.keys(byHref).length) {
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(en => {
+        if (en.isIntersecting && en.target && en.target.id) {
+          const id = '#' + en.target.id;
+          links.forEach(a => a.removeAttribute('aria-current'));
+          if (byHref[id]) byHref[id].setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(s => io.observe(s));
+  }
 })();
 
-/* ========= Enlaces del carrusel con smooth scroll ========= */
-(function carouselLinksInit(){
-  const carouselLinks = qsa('.carousel-item a');
-  
-  carouselLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (!href || !href.startsWith('#')) return;
-      
-      const target = qs(href);
-      if (!target) return;
-      
-      e.preventDefault();
-      
-      // Calcular la posición del header para el offset
-      const header = qs('header');
-      const headerHeight = header ? header.offsetHeight : 0;
-      const top = target.getBoundingClientRect().top + window.scrollY - (headerHeight + 20);
-      
-      window.scrollTo({ top, behavior: 'smooth' });
-      
-      // Actualizar la URL sin recargar la página
-      history.pushState(null, '', href);
-    });
-  });
-})();
-
-/* ========= Parallax por capas ========= */
-function parallaxTick() {
-  if (prefersReduced) return; // respetar accesibilidad
-  qsa('.section-book[data-variant="parallax"]').forEach(section => {
-    const hero = qs('[data-hero]', section);
-    if (!hero) return;
-    const p = elementScrollProgress(section, 0); // progreso 0..1 de toda la sección
-    // Velocidades configurables por data-attrs
-    const bgS  = parseFloat(section.dataset.speedBg  || '0.2');
-    const midS = parseFloat(section.dataset.speedMid || '0.5');
-    const fgS  = parseFloat(section.dataset.speedFg  || '0.9');
-
-    const layers = {
-      bg:  qs('.layer-bg img', hero),
-      mid: qs('.layer-mid img', hero),
-      fg:  qs('.layer-fg img', hero),
-    };
-    // Parallax: movemos en Y, leve en X para "vida"
-    if (layers.bg)  layers.bg.style.transform  = `translate3d(0, ${(-20 + p*40)*bgS}px, 0)`;
-    if (layers.mid) layers.mid.style.transform = `translate3d(0, ${(-30 + p*60)*midS}px, 0)`;
-    if (layers.fg)  layers.fg.style.transform  = `translate3d(0, ${(-40 + p*80)*fgS}px, 0)`;
-  });
-}
-
-/* ========= Vídeo scrub ========= */
-function videoScrubTick() {
-  if (prefersReduced) return;
-  qsa('.section-book[data-variant="video"]').forEach(section => {
-    const video = qs('.scrub-video', section);
-    if (!video) return;
-    // Asegurar que el vídeo está pausado; usamos currentTime manual
-    if (!video.dataset.bound) {
-      video.dataset.bound = '1';
-      video.pause();
-      // iOS: cargar metadata para conocer duración
-      video.addEventListener('loadedmetadata', ()=>{ /* no-op */ }, { once: true });
-    }
-    const p = elementScrollProgress(section, 0);
-    if (isFinite(video.duration) && video.duration > 0) {
-      const t = p * (video.duration - 0.05);
-        video.currentTime = t;
-    }
-  });
-}
-
-/* ========= Loop de scroll rAF ========= */
-const onScroll = rafThrottle(() => {
-  parallaxTick();
-  videoScrubTick();
-});
-window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('resize', rafThrottle(()=> { parallaxTick(); videoScrubTick(); }));
-
-/* ========= Carrusel ========= */
+/* ========= Carousel ========= */
 (function carouselInit() {
   const carousel = qs('.carousel');
-  const items = qsa('.carousel-item');
-  const dots = qsa('.carousel-dots .dot');
-  const leftArrow = qs('.carrousel-arrow.left');
-  const rightArrow = qs('.carrousel-arrow.right');
-  
-  if (!carousel || items.length === 0) return;
-  
+  if (!carousel) return;
+
+  const items = qsa('.carousel-item', carousel);
+  if (!items.length) return;
+
+  const dotsContainer = qs('.carousel-dots', carousel.parentElement || document);
+  const dots = dotsContainer ? qsa('.dot', dotsContainer) : [];
+  const leftArrow = qs('.carrousel-arrow.left', carousel) || qs('.carousel-arrow.left', carousel);
+  const rightArrow = qs('.carrousel-arrow.right', carousel) || qs('.carousel-arrow.right', carousel);
+
   let currentIndex = 0;
   let isTransitioning = false;
-  
-  // Auto-play interval (opcional)
   let autoPlayInterval = null;
-  const autoPlayDelay = 5000; // 5 segundos
-  
+  const autoPlayDelay = 5000;
+
+  function setClasses() {
+    items.forEach((item, index) => {
+      item.classList.remove('active', 'prev', 'next');
+      if (index === currentIndex) item.classList.add('active');
+      else if (index === (currentIndex - 1 + items.length) % items.length) item.classList.add('prev');
+      else if (index === (currentIndex + 1) % items.length) item.classList.add('next');
+    });
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+  }
+
   function updateCarousel() {
     if (isTransitioning) return;
     isTransitioning = true;
-    
-    items.forEach((item, index) => {
-      item.classList.remove('active', 'prev', 'next');
-      
-      if (index === currentIndex) {
-        item.classList.add('active');
-      } else if (index === currentIndex - 1 || (currentIndex === 0 && index === items.length - 1)) {
-        item.classList.add('prev');
-      } else if (index === currentIndex + 1 || (currentIndex === items.length - 1 && index === 0)) {
-        item.classList.add('next');
-      }
-    });
-    
-    // Actualizar dots
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('active', index === currentIndex);
-    });
-    
-    // Permitir nueva transición después de la animación
-    setTimeout(() => {
+    setClasses();
+
+    // Wait for transitionend on the active item or fallback after timeout
+    const activeEl = items[currentIndex];
+    let finished = false;
+    const cleanup = () => {
+      if (finished) return;
+      finished = true;
       isTransitioning = false;
-    }, 600);
-  }
-  
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % items.length;
-    updateCarousel();
-    resetAutoPlay();
-  }
-  
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + items.length) % items.length;
-    updateCarousel();
-    resetAutoPlay();
-  }
-  
-  function goToSlide(index) {
-    if (index !== currentIndex && !isTransitioning) {
-      currentIndex = index;
-      updateCarousel();
-      resetAutoPlay();
-    }
-  }
-  
-  function startAutoPlay() {
-    if (prefersReduced) return; // Respetar preferencias de movimiento
-    autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
-  }
-  
-  function stopAutoPlay() {
-    if (autoPlayInterval) {
-      clearInterval(autoPlayInterval);
-      autoPlayInterval = null;
-    }
-  }
-  
-  function resetAutoPlay() {
-    stopAutoPlay();
-    startAutoPlay();
-  }
-  
-  // Event listeners para flechas
-  leftArrow?.addEventListener('click', prevSlide);
-  rightArrow?.addEventListener('click', nextSlide);
-  
-  // Event listeners para dots
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goToSlide(index));
-  });
-  
-  // Touch/swipe support
-  let startX = 0;
-  let endX = 0;
-  
-  carousel.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    stopAutoPlay();
-  }, { passive: true });
-  
-  carousel.addEventListener('touchmove', (e) => {
-    endX = e.touches[0].clientX;
-  }, { passive: true });
-  
-  carousel.addEventListener('touchend', () => {
-    const diffX = startX - endX;
-    const threshold = 50; // mínimo movimiento para activar swipe
-    
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) {
-        nextSlide(); // Swipe left -> next
+      activeEl && activeEl.removeEventListener('transitionend', onEnd);
+    };
+
+    const onEnd = (e) => {
+      if (e && e.target) {
+        if (!e.target.closest || e.target.closest('.carousel-item')) {
+          cleanup();
+        }
       } else {
-        prevSlide(); // Swipe right -> prev
+        cleanup();
       }
-    } else {
-      resetAutoPlay();
-    }
+    };
+
+    (activeEl || carousel).addEventListener('transitionend', onEnd);
+    const fallback = setTimeout(() => { cleanup(); clearTimeout(fallback); }, 700);
+  }
+
+  function nextSlide() { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); resetAutoPlay(); }
+  function prevSlide() { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); resetAutoPlay(); }
+  function goToSlide(i) { if (i !== currentIndex && !isTransitioning) { currentIndex = i; updateCarousel(); resetAutoPlay(); } }
+
+  function startAutoPlay() { if (prefersReduced) return; stopAutoPlay(); autoPlayInterval = setInterval(nextSlide, autoPlayDelay); }
+  function stopAutoPlay() { if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; } }
+  function resetAutoPlay() { stopAutoPlay(); startAutoPlay(); }
+
+  if (leftArrow) leftArrow.addEventListener('click', prevSlide);
+  if (rightArrow) rightArrow.addEventListener('click', nextSlide);
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+
+  let startX = 0, endX = 0;
+  carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopAutoPlay(); }, { passive: true });
+  carousel.addEventListener('touchmove', (e) => { endX = e.touches[0].clientX; }, { passive: true });
+  carousel.addEventListener('touchend', () => {
+    const diffX = startX - endX; const threshold = 50;
+    if (Math.abs(diffX) > threshold) { if (diffX > 0) nextSlide(); else prevSlide(); } else resetAutoPlay();
   });
-  
-  // Keyboard navigation
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      prevSlide();
-    } else if (e.key === 'ArrowRight') {
-      nextSlide();
-    }
+    const active = document.activeElement;
+    if (active && ['INPUT','TEXTAREA','SELECT'].includes(active.tagName)) return;
+    if (e.key === 'ArrowLeft') prevSlide(); else if (e.key === 'ArrowRight') nextSlide();
   });
-  
-  // Pause auto-play when hovering
+
   carousel.addEventListener('mouseenter', stopAutoPlay);
   carousel.addEventListener('mouseleave', startAutoPlay);
-  
-  // Pause auto-play when tab is not visible
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      stopAutoPlay();
-    } else {
-      resetAutoPlay();
-    }
-  });
-  
-  // Initialize
+  document.addEventListener('visibilitychange', () => { if (document.hidden) stopAutoPlay(); else resetAutoPlay(); });
+
+  // init
   updateCarousel();
   startAutoPlay();
 })();
