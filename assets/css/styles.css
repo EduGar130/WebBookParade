@@ -177,7 +177,7 @@ h1, h2, h3 {
 
 /* Hamburger */
 .nav-toggle {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 5px;
   padding: 8px;
@@ -256,6 +256,7 @@ h1, h2, h3 {
    HERO
    ============================================================ */
 .hero {
+  position: relative;
   min-height: 100svh;
   min-height: 100vh;
   display: flex;
