@@ -1,162 +1,124 @@
-/* main.js — single clean implementation for helpers, nav and carousel */
+/* main.js — Eduardo Montalbán Poeta */
 
-/* ========= Helpers ========= */
-const qs  = (s, c=document) => c.querySelector(s);
-const qsa = (s, c=document) => Array.from(c.querySelectorAll(s));
-const clamp = (v, min=0, max=1) => Math.min(max, Math.max(min, v));
+'use strict';
 
-function rafThrottle(fn) {
-  let af = null, lastArgs = null;
-  return function throttled(...args) {
-    lastArgs = args;
-    if (af) return;
-    af = requestAnimationFrame(() => { af = null; fn.apply(this, lastArgs); });
-  };
-}
+const qs  = (s, c = document) => c.querySelector(s);
+const qsa = (s, c = document) => Array.from(c.querySelectorAll(s));
+const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function elementScrollProgress(el, offset = 0) {
-  const rect = el.getBoundingClientRect();
-  const vh = window.innerHeight || document.documentElement.clientHeight;
-  const start = vh * offset;
-  const end   = rect.height + vh * (1 - offset);
-  const y = -rect.top + start;
-  return clamp(y / end, 0, 1);
-}
-
-const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/* ========= Navbar: toggle + scrollspy ========= */
-(function navInit(){
-  const toggle = qs('.nav-toggle');
+/* ============================================================
+   NAV — hamburger toggle + scroll spy
+   ============================================================ */
+(function navInit() {
+  const toggle = qs('#nav-toggle');
   const menu   = qs('#nav-menu');
-  if (toggle && menu) {
-    toggle.addEventListener('click', () => {
-      const open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
-  }
+  const header = qs('.site-header');
+  if (!toggle || !menu) return;
 
-  const links = qsa('[data-spy]');
-  links.forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      if (!id || !id.startsWith('#')) return;
-      const target = qs(id);
-      if (!target) return;
-      e.preventDefault();
-      const headerH = qs('.site-header') ? qs('.site-header').offsetHeight : 0;
-      const top = target.getBoundingClientRect().top + window.scrollY - (headerH + 8);
-      window.scrollTo({ top, behavior: 'smooth' });
-      if (menu) menu.classList.remove('open');
-      if (toggle) toggle.setAttribute('aria-expanded', 'false');
-      history.pushState(null, '', id);
+  // Toggle mobile menu
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  // Close on link click
+  qsa('.nav-link', menu).forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     });
   });
 
-  const sections = qsa('main > .section');
-  const byHref = Object.fromEntries(links.map(a => [a.getAttribute('href'), a]));
-  if (sections.length && Object.keys(byHref).length) {
-    const io = new IntersectionObserver((entries)=> {
-      entries.forEach(en => {
-        if (en.isIntersecting && en.target && en.target.id) {
-          const id = '#' + en.target.id;
-          links.forEach(a => a.removeAttribute('aria-current'));
-          if (byHref[id]) byHref[id].setAttribute('aria-current', 'true');
-        }
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+
+  // Scroll spy — highlight active nav link
+  const sections = qsa('main > .section[id]');
+  const links    = qsa('.nav-link[href^="#"]');
+
+  if (sections.length && links.length) {
+    const headerH = header ? header.offsetHeight : 64;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = '#' + entry.target.id;
+        links.forEach(a => {
+          const active = a.getAttribute('href') === id;
+          a.setAttribute('aria-current', active ? 'true' : 'false');
+          a.toggleAttribute('aria-current', active);
+          if (active) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
       });
-    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    }, { rootMargin: `-${headerH}px 0px -55% 0px`, threshold: 0 });
+
     sections.forEach(s => io.observe(s));
   }
 })();
 
-/* ========= Carousel ========= */
-(function carouselInit() {
-  const carousel = qs('.carousel');
-  if (!carousel) return;
+/* ============================================================
+   REVEAL — fade-in sections on scroll
+   ============================================================ */
+(function revealInit() {
+  if (prefersReduced) return;
 
-  const items = qsa('.carousel-item', carousel);
-  if (!items.length) return;
+  // Add data-reveal to major blocks automatically
+  const targets = qsa(
+    '.about-inner, .books-grid .book-card, .book-section-media, .book-section-content, .hero-content, .hero-books'
+  );
+  targets.forEach((el, i) => {
+    el.setAttribute('data-reveal', '');
+    // Stagger book cards
+    if (el.classList.contains('book-card')) {
+      el.setAttribute('data-reveal-delay', String(i % 3 + 1));
+    }
+  });
 
-  const dotsContainer = qs('.carousel-dots', carousel.parentElement || document);
-  const dots = dotsContainer ? qsa('.dot', dotsContainer) : [];
-  const leftArrow = qs('.carrousel-arrow.left', carousel) || qs('.carousel-arrow.left', carousel);
-  const rightArrow = qs('.carrousel-arrow.right', carousel) || qs('.carousel-arrow.right', carousel);
-
-  let currentIndex = 0;
-  let isTransitioning = false;
-  let autoPlayInterval = null;
-  const autoPlayDelay = 5000;
-
-  function setClasses() {
-    items.forEach((item, index) => {
-      item.classList.remove('active', 'prev', 'next');
-      if (index === currentIndex) item.classList.add('active');
-      else if (index === (currentIndex - 1 + items.length) % items.length) item.classList.add('prev');
-      else if (index === (currentIndex + 1) % items.length) item.classList.add('next');
-    });
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
-  }
-
-  function updateCarousel() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    setClasses();
-
-    // Wait for transitionend on the active item or fallback after timeout
-    const activeEl = items[currentIndex];
-    let finished = false;
-    const cleanup = () => {
-      if (finished) return;
-      finished = true;
-      isTransitioning = false;
-      activeEl && activeEl.removeEventListener('transitionend', onEnd);
-    };
-
-    const onEnd = (e) => {
-      if (e && e.target) {
-        if (!e.target.closest || e.target.closest('.carousel-item')) {
-          cleanup();
-        }
-      } else {
-        cleanup();
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
       }
-    };
+    });
+  }, { threshold: 0.12 });
 
-    (activeEl || carousel).addEventListener('transitionend', onEnd);
-    const fallback = setTimeout(() => { cleanup(); clearTimeout(fallback); }, 700);
-  }
+  qsa('[data-reveal]').forEach(el => io.observe(el));
+})();
 
-  function nextSlide() { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); resetAutoPlay(); }
-  function prevSlide() { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); resetAutoPlay(); }
-  function goToSlide(i) { if (i !== currentIndex && !isTransitioning) { currentIndex = i; updateCarousel(); resetAutoPlay(); } }
+/* ============================================================
+   HERO BOOKS — subtle parallax on mouse move (desktop only)
+   ============================================================ */
+(function heroParallax() {
+  if (prefersReduced) return;
+  if (window.innerWidth < 900) return;
 
-  function startAutoPlay() { if (prefersReduced) return; stopAutoPlay(); autoPlayInterval = setInterval(nextSlide, autoPlayDelay); }
-  function stopAutoPlay() { if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; } }
-  function resetAutoPlay() { stopAutoPlay(); startAutoPlay(); }
+  const books = qsa('.hero-book');
+  if (!books.length) return;
 
-  if (leftArrow) leftArrow.addEventListener('click', prevSlide);
-  if (rightArrow) rightArrow.addEventListener('click', nextSlide);
-  dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
-
-  let startX = 0, endX = 0;
-  carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopAutoPlay(); }, { passive: true });
-  carousel.addEventListener('touchmove', (e) => { endX = e.touches[0].clientX; }, { passive: true });
-  carousel.addEventListener('touchend', () => {
-    const diffX = startX - endX; const threshold = 50;
-    if (Math.abs(diffX) > threshold) { if (diffX > 0) nextSlide(); else prevSlide(); } else resetAutoPlay();
+  const depths = [0.015, 0.025, 0.015];
+  document.addEventListener('mousemove', e => {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+    books.forEach((book, i) => {
+      const d = depths[i];
+      const tx = dx * d;
+      const ty = dy * d;
+      const base = i === 0 ? 'rotate(-4deg) translateY(8px)' :
+                   i === 1 ? 'rotate(0deg) translateY(-4px)' :
+                              'rotate(4deg) translateY(8px)';
+      book.style.transform = `${base} translate(${tx}px, ${ty}px)`;
+    });
   });
-
-  document.addEventListener('keydown', (e) => {
-    const active = document.activeElement;
-    if (active && ['INPUT','TEXTAREA','SELECT'].includes(active.tagName)) return;
-    if (e.key === 'ArrowLeft') prevSlide(); else if (e.key === 'ArrowRight') nextSlide();
-  });
-
-  carousel.addEventListener('mouseenter', stopAutoPlay);
-  carousel.addEventListener('mouseleave', startAutoPlay);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) stopAutoPlay(); else resetAutoPlay(); });
-
-  // init
-  updateCarousel();
-  startAutoPlay();
 })();

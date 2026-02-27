@@ -1,202 +1,377 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Eduardo Montalbán</title>
-  <meta name="description" content="Landing oficial de la poesía de Eduardo Montalbán. Descubre los libros, lee extractos y conoce al autor." />
-  <link rel="canonical" href="https://tu-dominio-o-ghpages/" />
-  <!-- favicon -->
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
+
+  <!-- SEO -->
+  <title>Eduardo Montalbán — Poeta | Lágrimas Calladas, Cuando la Tarde Sea Noche, Maraña de Silencios</title>
+  <meta name="description" content="Sitio oficial de Eduardo García Montalbán, poeta contemporáneo. Una voz íntima que explora la melancolía, el silencio y la belleza de lo humano." />
+  <meta name="author" content="Eduardo García Montalbán" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://eduardogmontalban.com/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Libros & Autor" />
-  <meta property="og:description" content="Descubre la poesía de Eduardo Montalbán: portadas animadas, extractos y biografía del autor." />
-  <meta property="og:image" content="assets/img/og-cover.jpg" />
-  <meta property="og:url" content="https://tu-dominio-o-ghpages/" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Eduardo Montalbán — Poeta" />
+  <meta property="og:title" content="Eduardo Montalbán — Poeta | Una voz íntima" />
+  <meta property="og:description" content="Descubre la poesía de Eduardo García Montalbán: una voz íntima que explora el alma, el silencio y la melancolía humana." />
+  <meta property="og:image" content="assets/img/book3/book3.webp" />
+  <meta property="og:url" content="https://eduardogmontalban.com/" />
 
-  <!-- Twitter -->
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Libros & Autor" />
-  <meta name="twitter:description" content="Portadas animadas con parallax o vídeo scrub, extractos y autor." />
-  <meta name="twitter:image" content="assets/img/og-cover.jpg" />
+  <meta name="twitter:title" content="Eduardo Montalbán — Poeta" />
+  <meta name="twitter:description" content="Poesía de Eduardo García Montalbán: una voz íntima que explora el silencio y la melancolía humana." />
+  <meta name="twitter:image" content="assets/img/book3/book3.webp" />
+  <meta name="twitter:site" content="@Eduardo93765433" />
 
-  <!-- Favicon Manifiesto básico -->
-  <link rel="icon" href="assets/img/favicon.png" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico" />
   <link rel="manifest" href="site.webmanifest" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0d0d14" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'" />
 
   <!-- CSS -->
   <link rel="preload" href="assets/css/styles.css" as="style" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 
-  <!-- Preferencias de movimiento: CSS lo respetará; JS leerá este media query -->
-  <meta name="color-scheme" content="light dark" />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Eduardo García Montalbán",
+    "url": "https://eduardogmontalban.com/",
+    "sameAs": [
+      "https://x.com/Eduardo93765433",
+      "https://www.instagram.com/eduardogmontalban",
+      "https://www.facebook.com/eduardo.g.montalban"
+    ],
+    "jobTitle": "Poeta",
+    "description": "Poeta contemporáneo español con una voz íntima que explora la melancolía, el silencio y la belleza de lo humano.",
+    "knowsAbout": "Poesía contemporánea española",
+    "works": [
+      {
+        "@type": "Book",
+        "name": "Lágrimas Calladas",
+        "author": {"@type": "Person", "name": "Eduardo García Montalbán"},
+        "inLanguage": "es",
+        "offers": {"@type": "Offer", "url": "https://amzn.eu/d/8NetjHh"}
+      },
+      {
+        "@type": "Book",
+        "name": "Cuando la Tarde Sea Noche",
+        "author": {"@type": "Person", "name": "Eduardo García Montalbán"},
+        "inLanguage": "es",
+        "offers": {"@type": "Offer", "url": "https://amzn.eu/d/2cNnJAW"}
+      },
+      {
+        "@type": "Book",
+        "name": "Maraña de Silencios",
+        "author": {"@type": "Person", "name": "Eduardo García Montalbán"},
+        "inLanguage": "es",
+        "offers": {"@type": "Offer", "url": "https://amzn.eu/d/2GMBpy6"}
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
-  <header>
-    <nav>
-      <div class="nav-header">
-        <a href="#about">EDUARDO MONTALBÁN</a>
-        <div class="nav-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">
-          <span class="icon">☰</span>
-        </div>
-      </div>
-      <ul>
-        <li><a href="#book1">LÁGRIMAS  CALLADAS</a></li>
-        <li><a href="#book2">CUANDO LA TARDE SEA NOCHE</a></li>
-        <li><a href="#book3">MARAÑA DE SILENCIOS</a></li>
+
+  <!-- ===== NAVIGATION ===== -->
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="#inicio" class="nav-brand" aria-label="Eduardo Montalbán — Inicio">
+        <span class="nav-brand-name">Eduardo Montalbán</span>
+        <span class="nav-brand-sub">Poeta</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Abrir menú">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu" role="list">
+        <li><a href="#sobre-el-autor" class="nav-link" data-spy>Autor</a></li>
+        <li><a href="#book1" class="nav-link" data-spy>Lágrimas Calladas</a></li>
+        <li><a href="#book2" class="nav-link" data-spy>Cuando la Tarde</a></li>
+        <li><a href="#book3" class="nav-link" data-spy>Maraña de Silencios</a></li>
       </ul>
-      
     </nav>
   </header>
-  <main>
-    <section id="about" class="section">
-      <div class="author-img">
-        <img src="assets/img/about/author.jpeg" alt="Eduardo G. Montalbán"></img>
-      </div>
-      <h2>Sobre el autor</h2>
-      <p>Eduardo Montalbán es un autor contemporáneo que explora las emociones humanas a través de su poesía.</p>
-      <p>Sus versos invitan a la reflexión y al descubrimiento personal.</p>
-      <div class="social-links">
-        <a href="https://x.com/Eduardo93765433" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="https://www.instagram.com/eduardogmontalban" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/eduardo.g.montalban" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook"></i></a>
-      </div>
-    </section>
-  <section id="latest-book" class="section">
-      <h2>Último libro</h2>
-      <div class="book-cover-img">
-        <!-- <video src="assets/videos/lastBook.mp4" autoplay muted loop></video> -->
-        <img src="assets/img/book3/book3.webp" alt="Último libro de la trilogía"></img>
-      </div>
-      <a href="https://amzn.eu/d/2GMBpy6" class="btn">Comprar <i class="fas fa-shopping-cart"></i></a>
-    </section>
-  <section id="carrousel" class="section">
-      <h2>Libros</h2>
-      <div class="carousel">
-        <div class="carrousel-arrow left">
-          <span class="icon">&lt;</span>
-        </div>
-        <div class="carousel-item">
-          <a href="#book1">
-            <img src="assets/img/book1/book1.webp" alt="Lágrimas Calladas"></img>
-          </a>
-        </div>
-        <div class="carousel-item">
-          <a href="#book2">
-            <img src="assets/img/book2/book2-cover.jpeg" alt="Cuando la Tarde Sea Noche"></img>
-          </a>
-        </div>
-        <div class="carousel-item">
-          <a href="#book3">
-            <img src="assets/img/book3/book3.webp" alt="Maraña de Silencios"></img>
-          </a>
-        </div>
-        <div class="carrousel-arrow right">
-          <span class="icon">&gt;</span>
-        </div>
-      </div>
-      <div class="carousel-dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    </section>
-    <section id="book1" class="section section-book">
-      <h2>Lágrimas calladas</h2>
-      <div class="book-cover">
-        <video src="assets/video/book1.mp4" autoplay muted loop></video>
-      </div>
-      <p>A veces, lo que no dice una lágrima, una sonrisa, un gesto, lo puede expresar la poesía.</p>
-      <blockquote>
-        <p>LÁGRIMAS CALLADAS</p>
-        <p>No sé por qué te escondes<br>
-        en esa triste mirada,<br>
-        en esos ojos heridos<br>
-        llenos de melancolía,<br>
-        en el tenue pestañeo<br>
-        que acaricia tus pupilas.</p>
-        
-        <p>No sé por qué te escondes<br>
-        en esos labios de seda,<br>
-        en la inefable armonía<br>
-        de tus silentes palabras,<br>
-        en la calma que desprende<br>
-        el rubor de tu sonrisa.</p>
-        
-        <p>Solo sé que en lo más hondo,<br>
-        donde tu alma solloza,<br>
-        brotan lágrimas calladas<br>
-        que hieren tu corazón.</p>
-      </blockquote>
-      <a href="https://amzn.eu/d/8NetjHh" class="btn">Comprar <i class="fas fa-shopping-cart"></i></a>
-    </section>
-    <section id="book2" class="section section-book">
-      <h2>Cuando la tarde sea noche</h2>
-      <div class="book-cover">
-        <video src="assets/video/book2.mp4" autoplay muted loop></video>
-      </div>
-      <p>El amor, el desamor, la melancolía, lo transcendente de nuestra existencia, son la tinta y la pluma que dan forma a este poemario.</p>
-      <blockquote>
-        <p>CUANDO LA TARDE SEA NOCHE</p>
-        <p>Cuando la vida se convierta en silencio<br>
-        y los recuerdos se marchiten en la nada,<br>
-        nuestros suspiros sean brisa, sean viento<br>
-        y las palabras sean luces eclipsadas.</p>
-        
-        <p>Cuando las noches se hagan dueñas de las horas<br>
-        y los minutos sean sueños pasajeros,<br>
-        cuando los días busquen luces en las sombras,<br>
-        porque las sombras se hagan dueñas del momento.</p>
-        
-        <p>Recorreremos el camino, sin temores<br>
-        y nuestros pasos serán ríos que se abrazan,<br>
-        esperaremos que la tarde sea noche<br>
-        y que la noche quizá tenga un mañana.</p>
-      </blockquote>
 
-      <a href="https://amzn.eu/d/2cNnJAW" class="btn">Comprar <i class="fas fa-shopping-cart"></i></a>
-    </section>
-    <section id="book3" class="section section-book">
-      <h2>Maraña de silencios</h2>
-      <div class="book-cover-img">
-        <!-- <video src="assets/videos/book3.mp4" autoplay muted loop></video> -->
-        <img src="assets/img/book3/book3.webp" alt="Maraña de Silencios"></img>
-      </div>
-      <p>Un viaje introspectivo y metafórico, por esa maraña de silencios que va envolviendo<br> nuestro proceso vital, a veces como adorno, a veces como evidencia.</p>
+  <main id="inicio">
 
-      <blockquote>
-        <p>MARAÑA DE SILENCIOS</p>
-        <p>Un cielo adormilado de tez ensangrentada<br>
-        recorre lentamente las huellas que dejamos.<br>
-        La noche se hace eterna, espesa como el lodo;<br>
-        maraña de silencios que hablan sin descanso.<br>
-        Olvido aquella tarde que pronto se hizo noche,<br>
-        sus lágrimas calladas sonríen muy despacio.</p>
-        
-        <p>Un viento impetuoso con aires de mañana<br>
-        inunda de colores las sombras de mi ocaso.<br>
-        El día pasa raudo, veloz como un suspiro;<br>
-        enredo de sonidos que callan con descaro.<br>
-        Olvido la mañana que pronto se hizo tarde<br>
-        vagando eternamente, muriendo entre mi manos.</p>
-        
-        <p>El cielo no perece, renace en sus cenizas,<br>
-        resurge entre las nubes con ojos enlutados.<br>
-        Se esconde atormentado, herido de grandeza,<br>
-        perdido entre las burlas que suenan como halagos.<br>
-        Despierta cada día rasgando sus silencios,<br>
-        se oculta tras la noche borrado de un plumazo.</p>
-      </blockquote>
-      <a href="https://amzn.eu/d/2GMBpy6" class="btn">Comprar <i class="fas fa-shopping-cart"></i></a>
+    <!-- ===== HERO ===== -->
+    <section class="hero section" aria-label="Portada">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Una voz íntima</p>
+        <h1 class="hero-title">Eduardo<br><em>Montalbán</em></h1>
+        <p class="hero-sub">Versos que exploran el silencio, la melancolía<br class="br-desktop"> y la belleza de lo que no se dice.</p>
+        <div class="hero-cta">
+          <a href="#libros" class="btn btn-primary">Explorar los libros</a>
+          <a href="#sobre-el-autor" class="btn btn-ghost">Conocer al autor</a>
+        </div>
+      </div>
+      <div class="hero-books" aria-hidden="true">
+        <div class="hero-book hero-book--1">
+          <img src="assets/img/book1/book1.webp" alt="" loading="eager" />
+        </div>
+        <div class="hero-book hero-book--2">
+          <img src="assets/img/book2/book2-cover.webp" alt="" loading="eager" />
+        </div>
+        <div class="hero-book hero-book--3">
+          <img src="assets/img/book3/book3.webp" alt="" loading="eager" />
+        </div>
+      </div>
+      <a href="#sobre-el-autor" class="hero-scroll" aria-label="Desplazarse hacia abajo">
+        <span class="hero-scroll-line"></span>
+        <span class="hero-scroll-text">Scroll</span>
+      </a>
     </section>
-    <footer>
-      <p>&copy; 2025 Eduardo García Montalbán. Todos los derechos reservados.</p>
-      <p>Diseñado por <a href="https://eduardogr.com/">EduardoGR</a></p>
-    </footer>
+
+    <!-- ===== SOBRE EL AUTOR ===== -->
+    <section id="sobre-el-autor" class="section about-section" aria-labelledby="about-title">
+      <div class="about-inner">
+        <div class="about-portrait">
+          <div class="portrait-frame">
+            <img
+              src="assets/img/about/author.jpeg"
+              alt="Fotografía de Eduardo García Montalbán, poeta"
+              loading="lazy"
+              width="400"
+              height="400"
+            />
+          </div>
+        </div>
+        <div class="about-text">
+          <span class="section-label">El autor</span>
+          <h2 id="about-title" class="section-title">Eduardo García<br>Montalbán</h2>
+          <p>Eduardo Montalbán es un autor contemporáneo que explora las emociones humanas a través de su poesía.</p>
+          <p>Sus versos invitan a la reflexión y al descubrimiento personal, tejiendo imágenes de melancolía, amor y silencio en una voz única y profunda.</p>
+          <div class="social-links" aria-label="Redes sociales del autor">
+            <a href="https://x.com/Eduardo93765433" target="_blank" rel="noopener noreferrer" aria-label="Eduardo Montalbán en X (Twitter)">
+              <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.instagram.com/eduardogmontalban" target="_blank" rel="noopener noreferrer" aria-label="Eduardo Montalbán en Instagram">
+              <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.facebook.com/eduardo.g.montalban" target="_blank" rel="noopener noreferrer" aria-label="Eduardo Montalbán en Facebook">
+              <i class="fa-brands fa-facebook" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LIBROS (OVERVIEW) ===== -->
+    <section id="libros" class="section books-section" aria-labelledby="books-title">
+      <div class="section-header">
+        <span class="section-label">Obra del autor</span>
+        <h2 id="books-title" class="section-title">Los libros</h2>
+      </div>
+      <div class="books-grid">
+        <article class="book-card">
+          <a href="#book1" class="book-card-link" aria-label="Ver Lágrimas Calladas">
+            <div class="book-card-cover">
+              <img src="assets/img/book1/book1.webp" alt="Portada de Lágrimas Calladas" loading="lazy" />
+            </div>
+            <div class="book-card-info">
+              <span class="book-card-num">I</span>
+              <h3 class="book-card-title">Lágrimas<br>Calladas</h3>
+            </div>
+          </a>
+          <a href="https://amzn.eu/d/8NetjHh" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+            Comprar <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </article>
+
+        <article class="book-card book-card--featured">
+          <a href="#book2" class="book-card-link" aria-label="Ver Cuando la Tarde Sea Noche">
+            <div class="book-card-cover">
+              <img src="assets/img/book2/book2-cover.webp" alt="Portada de Cuando la Tarde Sea Noche" loading="lazy" />
+            </div>
+            <div class="book-card-info">
+              <span class="book-card-num">II</span>
+              <h3 class="book-card-title">Cuando la Tarde<br>Sea Noche</h3>
+            </div>
+          </a>
+          <a href="https://amzn.eu/d/2cNnJAW" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+            Comprar <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </article>
+
+        <article class="book-card">
+          <a href="#book3" class="book-card-link" aria-label="Ver Maraña de Silencios">
+            <div class="book-card-cover">
+              <img src="assets/img/book3/book3.webp" alt="Portada de Maraña de Silencios" loading="lazy" />
+            </div>
+            <div class="book-card-info">
+              <span class="book-card-num">III</span>
+              <h3 class="book-card-title">Maraña de<br>Silencios</h3>
+            </div>
+          </a>
+          <a href="https://amzn.eu/d/2GMBpy6" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+            Comprar <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== BOOK 1 ===== -->
+    <section id="book1" class="section book-section" aria-labelledby="book1-title">
+      <div class="book-section-inner">
+        <div class="book-section-media">
+          <div class="book-section-frame">
+            <video
+              src="assets/video/book1.mp4"
+              autoplay muted loop playsinline
+              aria-hidden="true"
+              preload="metadata"
+            ></video>
+          </div>
+        </div>
+        <div class="book-section-content">
+          <span class="section-label">Primer poemario</span>
+          <h2 id="book1-title" class="book-title">Lágrimas<br><em>Calladas</em></h2>
+          <p class="book-desc">A veces, lo que no dice una lágrima, una sonrisa, un gesto, lo puede expresar la poesía.</p>
+          <blockquote class="poem">
+            <h3 class="poem-title">Lágrimas Calladas</h3>
+            <div class="poem-verses">
+              <p>No sé por qué te escondes<br>
+              en esa triste mirada,<br>
+              en esos ojos heridos<br>
+              llenos de melancolía,<br>
+              en el tenue pestañeo<br>
+              que acaricia tus pupilas.</p>
+              <p>No sé por qué te escondes<br>
+              en esos labios de seda,<br>
+              en la inefable armonía<br>
+              de tus silentes palabras,<br>
+              en la calma que desprende<br>
+              el rubor de tu sonrisa.</p>
+              <p>Solo sé que en lo más hondo,<br>
+              donde tu alma solloza,<br>
+              brotan lágrimas calladas<br>
+              que hieren tu corazón.</p>
+            </div>
+          </blockquote>
+          <a href="https://amzn.eu/d/8NetjHh" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Comprar en Amazon <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BOOK 2 ===== -->
+    <section id="book2" class="section book-section book-section--alt" aria-labelledby="book2-title">
+      <div class="book-section-inner">
+        <div class="book-section-content">
+          <span class="section-label">Segundo poemario</span>
+          <h2 id="book2-title" class="book-title">Cuando la Tarde<br><em>Sea Noche</em></h2>
+          <p class="book-desc">El amor, el desamor, la melancolía, lo transcendente de nuestra existencia, son la tinta y la pluma que dan forma a este poemario.</p>
+          <blockquote class="poem">
+            <h3 class="poem-title">Cuando la Tarde Sea Noche</h3>
+            <div class="poem-verses">
+              <p>Cuando la vida se convierta en silencio<br>
+              y los recuerdos se marchiten en la nada,<br>
+              nuestros suspiros sean brisa, sean viento<br>
+              y las palabras sean luces eclipsadas.</p>
+              <p>Cuando las noches se hagan dueñas de las horas<br>
+              y los minutos sean sueños pasajeros,<br>
+              cuando los días busquen luces en las sombras,<br>
+              porque las sombras se hagan dueñas del momento.</p>
+              <p>Recorreremos el camino, sin temores<br>
+              y nuestros pasos serán ríos que se abrazan,<br>
+              esperaremos que la tarde sea noche<br>
+              y que la noche quizá tenga un mañana.</p>
+            </div>
+          </blockquote>
+          <a href="https://amzn.eu/d/2cNnJAW" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Comprar en Amazon <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="book-section-media">
+          <div class="book-section-frame">
+            <video
+              src="assets/video/book2.mp4"
+              autoplay muted loop playsinline
+              aria-hidden="true"
+              preload="metadata"
+            ></video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BOOK 3 ===== -->
+    <section id="book3" class="section book-section" aria-labelledby="book3-title">
+      <div class="book-section-inner">
+        <div class="book-section-media">
+          <div class="book-section-frame">
+            <img
+              src="assets/img/book3/book3.webp"
+              alt="Portada de Maraña de Silencios"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="book-section-content">
+          <span class="section-label">Tercer poemario · Último</span>
+          <h2 id="book3-title" class="book-title">Maraña de<br><em>Silencios</em></h2>
+          <p class="book-desc">Un viaje introspectivo y metafórico por esa maraña de silencios que va envolviendo nuestro proceso vital, a veces como adorno, a veces como evidencia.</p>
+          <blockquote class="poem">
+            <h3 class="poem-title">Maraña de Silencios</h3>
+            <div class="poem-verses">
+              <p>Un cielo adormilado de tez ensangrentada<br>
+              recorre lentamente las huellas que dejamos.<br>
+              La noche se hace eterna, espesa como el lodo;<br>
+              maraña de silencios que hablan sin descanso.<br>
+              Olvido aquella tarde que pronto se hizo noche,<br>
+              sus lágrimas calladas sonríen muy despacio.</p>
+              <p>Un viento impetuoso con aires de mañana<br>
+              inunda de colores las sombras de mi ocaso.<br>
+              El día pasa raudo, veloz como un suspiro;<br>
+              enredo de sonidos que callan con descaro.<br>
+              Olvido la mañana que pronto se hizo tarde<br>
+              vagando eternamente, muriendo entre mi manos.</p>
+              <p>El cielo no perece, renace en sus cenizas,<br>
+              resurge entre las nubes con ojos enlutados.<br>
+              Se esconde atormentado, herido de grandeza,<br>
+              perdido entre las burlas que suenan como halagos.<br>
+              Despierta cada día rasgando sus silencios,<br>
+              se oculta tras la noche borrado de un plumazo.</p>
+            </div>
+          </blockquote>
+          <a href="https://amzn.eu/d/2GMBpy6" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            Comprar en Amazon <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-name">Eduardo García Montalbán</p>
+      <p class="footer-copy">&copy; 2025 Todos los derechos reservados.</p>
+      <p class="footer-credit">Diseñado por <a href="https://eduardogr.com/" target="_blank" rel="noopener noreferrer">EduardoGR</a></p>
+    </div>
+  </footer>
 
   <!-- JS -->
   <script src="assets/js/main.js" defer></script>
