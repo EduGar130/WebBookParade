@@ -712,7 +712,7 @@ h1, h2, h3 {
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--text-muted);
-    padding: 0.5rem 0.85rem;
+    padding: 0.2rem 0.85rem;
     border-radius: 6px;
     transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
   }
