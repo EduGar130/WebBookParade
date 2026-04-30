@@ -1,4 +1,4 @@
-/* main.js — Eduardo Montalbán Poeta */
+/* main.js — Eduardo Montalbán Poesía */
 
 'use strict';
 
