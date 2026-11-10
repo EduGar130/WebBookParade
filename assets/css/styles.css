@@ -338,6 +338,7 @@ h1, h2, h3 {
 .hero-book--1 { transform: rotate(-4deg) translateY(8px); }
 .hero-book--2 { transform: rotate(0deg) translateY(-4px); }
 .hero-book--3 { transform: rotate(4deg) translateY(8px); }
+.hero-book--4 { transform: rotate(-3deg) translateY(0); }
 .hero-book:hover { transform: rotate(0deg) translateY(-8px) scale(1.04) !important; }
 
 /* Scroll indicator */
@@ -653,6 +654,12 @@ h1, h2, h3 {
   margin-bottom: 1.25rem;
 }
 .poem-verses p:last-child { margin-bottom: 0; }
+
+/* Poema con versos largos: sin saltos de línea; en móvil la fuente se ajusta al ancho */
+.poem--nowrap .poem-verses {
+  white-space: nowrap;
+  font-size: min(1rem, calc((100vw - 85px) / 21));
+}
 
 /* ============================================================
    FOOTER
